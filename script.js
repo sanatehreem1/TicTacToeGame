@@ -10,7 +10,11 @@ function initialise(){
     board = [-1,-2,-3,
              -4,-5,-6,
              -7,-8,-9];
-    turn(1, playerCount)
+    let botStrat = 0;
+    if (playerCount == 1){
+        botStrat = prompt('Press 1 for easy difficulty bot, and 2 for hard difficulty: ')
+    }
+    turn(1, playerCount, botStrat)
 }
 
 function translate(value){
@@ -36,13 +40,13 @@ function writeBoard(board){
 
 function checkWin(board){
     for (i=0; i < 3; i++){
-        if (board[i] == board[i+1] && board[i+1] == board[i+2]){
+        if (board[3*i] == board[3*i+1] && board[3*i+1] == board[3*i+2]){
             return true;
         } else if (board[i + 0] == board[i+3] && board[i+3] == board[i+6]){
             return true;
         }
     }
-    if (board[0] == board[4] && board[4] == board[9]){
+    if (board[0] == board[4] && board[4] == board[8]){
         return true;
     } else if (board[2] == board[4] && board[4] == board[6]){
         return true;
@@ -52,23 +56,109 @@ function checkWin(board){
    
 }
 
+function closeToWin(board){
+    for (let i=0; i<3; i++){
+        if (board[3*i] == board[3*i+1] && board[3*i+2] < 0){
+            return 3*i+2;
+        } else if (board[3*i] == board[3*i+2] && board[3*i+1] < 0){
+            return 3*i+1;
+        }else if (board[3*i+1] == board[3*i+2] && board[3*i] < 0){
+            return 3*i;
+
+        } else if (board[i+0] == board[i+3] && board[i+6] < 0){
+            return i+6;
+        } else if (board[i+0] == board[i+6] && board[i+3] < 0){
+            return i+3;
+        } else if (board[i+3] == board[i+6] && board[i+0] < 0){
+            return i;
+        } 
+    }
+    
+    if (board[0] == board[4] && board[8] < 0){
+        return 8;
+    } else if (board[0] == board[8] && board[4] < 0){
+        return 4;
+    } else if (board[4] == board[8] && board[0] < 0){
+        return 0;
+    } else if (board[2] == board[4] && board[6] < 0){
+        return 6;
+    } else if (board[2] == board[6] && board[4] < 0){
+        return 4;
+    } else if (board[4] == board[6] && board[2] < 0){
+        return 2;
+    } else {
+        return -1;
+    }
+}
+
+function cornerFree(board){
+    for (i=0; i<5;i++){
+        if (board[2*i] < 0 && i != 2){
+            return 2*i;
+        }
+    }
+    return -1;
+}
+
+function randomGo(board){
+    let position = Math.floor(Math.random()*9);
+    while (board[position] >= 0){
+        position = Math.floor(Math.random()*9);
+    }
+    board[position] = 0;
+    console.log('Player 2 (O) has chosen position ' + (position + 1) + '.' ); 
+}
+
+function algorithm(strat){
+    if (strat == 1){
+        randomGo(board);
+
+    } else if (strat == 2){
+        let pos = closeToWin(board);
+        if (pos >= 0){
+            board[pos] = 0;
+            console.log('Player 2 (O) has chosen position ' + (pos + 1)  + '.');
+
+        } else if (cornerFree(board) >= 0){
+            let pos2 = cornerFree(board);
+            board[pos2] = 0;
+            console.log('Player 2 (O) has chosen position ' + (pos2 + 1)  + '.');
+            
+        } else{
+            randomGo(board);
+        }
+    }
+    if (checkWin(board)) {
+        // the checkwin needs 
+        console.log('\nThe Final Board:\n' + writeBoard(board));
+        console.log("Player 2 (O) wins!");
+    } else if (Math.min(...board) > -1) {
+        // Math.min(...array)
+        console.log('\nThe Final Board:\n' + writeBoard(board));
+        console.log("It's a draw!");
+    } else {
+        turn(1, 1, strat);
+    }
+    
+}
+
 
 //sana's code
 
 
-function turn(playerVal, playerNo){
-    console.log('Current Board:\n' + writeBoard(board));
+function turn(playerVal, playerNo, diff){
+    console.log('\nCurrent Board:\n' + writeBoard(board));
 
  // play a turn
-    let move = prompt(`Player ${playerVal} (${translate(playerVal)}), choose a position (1–9): `);
+    let move = prompt(`Player ${playerVal} (${translate(playerVal)}), choose a position (1-9): `);
     move = parseInt(move) - 1;
 
     if (move < 0 || move > 8) {
         console.log("Invalid position. Try again.");
-        return turn(playerVal, playerNo);
+        return turn(playerVal, playerNo, diff);
     } else if (board[move] > -1) {
-        console.log(" That spot is already taken. Try again.");
-        return turn(playerVal, playerNo);
+        console.log("That spot is already taken. Try again.");
+        return turn(playerVal, playerNo, diff);
     } else{
         board[move] = playerVal;
     }
@@ -76,14 +166,16 @@ function turn(playerVal, playerNo){
     //check if win (ill make the checkWin function)
     if (checkWin(board)) {
         // the checkwin needs 
-        console.log(writeBoard(board));
-        console.log(` Player ${playerNo} (${translate(playerVal)}) wins!`);
+        console.log('\nThe Final Board:\n' + writeBoard(board));
+        console.log(` Player ${playerVal} (${translate(playerVal)}) wins!`);
     } else if (Math.min(...board) > -1) {
         // Math.min(...array)
-        console.log(writeBoard(board));
+        console.log('\nThe Final Board:\n' + writeBoard(board));
         console.log("It's a draw!");
-    } else {
-        turn(((playerVal + 1) % 2), 2);
+    } else if (playerNo == 2) {
+        turn(((playerVal + 1) % 2), 2, diff);
+    } else{
+        algorithm(diff);
     }
     
  
@@ -93,8 +185,3 @@ function turn(playerVal, playerNo){
 }
 
 initialise()
-
-
-
-
-
