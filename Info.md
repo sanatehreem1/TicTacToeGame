@@ -89,3 +89,16 @@ Board layout:
 4. Colored board using chalk
 5. Improved input handling
 6. Deploy as a small web game
+
+## New Feature: 1-Player Mode with Bot Difficulty
+
+This project now includes a **1-player mode** where the user can play against a computer-controlled bot. When selecting 1 player, the game allows you to choose between different difficulty levels:
+
+- **Easy** – Bot chooses a random available move  
+- **Medium** – Bot blocks obvious winning moves and makes simple strategic decisions  
+
+This feature expands on the original CLI version and introduces basic AI logic, improving gameplay and making the experience more challenging and dynamic.
+
+<img src = "./1player.png" width = "400">
+
+
