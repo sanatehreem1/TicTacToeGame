@@ -100,3 +100,16 @@ This project now includes a **1-player mode** where the user can play against a 
 This feature expands on the original CLI version and introduces basic AI logic, improving gameplay and making the experience more challenging and dynamic.
 
 <img src = "./1player.png" width = "400">
+
+## 🤖 Hardest Difficulty: Bot Goes First
+
+We also added a **third difficulty level**, where the bot (O) takes the **first move**.  
+This makes the game significantly harder, because the bot opens with an optimal strategy and the player must respond.
+
+### Difficulty Options:
+- **Easy (1)** – Bot plays randomly  
+- **Hard (2)** – Bot uses blocking + corner strategy  
+- **Hardest (3)** – **Bot goes first and uses the hard strategy**
+
+In the hardest level, the bot immediately plays an opening move before the player even begins. This feature adds challenge and variety, making the game more strategic and fun.
+
