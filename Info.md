@@ -1,7 +1,5 @@
 # Tic Tac Toe – CLI Game
-_A JavaScript command-line Tic Tac Toe game built for Hackathon #1_
-
----
+A JavaScript command-line Tic Tac Toe game built for Hackathon 
 
 ## Project Description
 This is a fully interactive **Tic Tac Toe** game played in the terminal using **Node.js**.  
@@ -48,13 +46,13 @@ Board layout:
  7 | 8 | 9
 ```
 
-### **5. Technologies**
+## Technologies
 - JavaScript (Node.js)
 - prompt-sync (CLI input)
 - Terminal 
 - Recursion & modular functions
 
-### **6. Process**
+## Process
 1. Wrote the pseudocode based on the game logic
 2. Designed the board using numeric values
 3. Built helper functions:
@@ -65,3 +63,29 @@ Board layout:
 - ``` turn() ```
 4. Added player turn recursion
 5. Tested win, draw, and invalid input cases
+
+## Screenshots
+
+## Wins
+1. Working CLI Tic Tac Toe game
+2. Successfully used numeric board + translation
+3. Built recursive player turn logic
+4. Correctly detect draw using ```Math.min(...board)```
+5. Pair programmed effectively
+
+## Challenges
+1. Preventing overwriting moves
+2. Handling invalid input smoothly
+3. Correct board indexing
+
+## Bugs
+1. 1-player algorithm not implemented yet
+2. No "Quit game" option
+
+## Future Features 
+1. Computer opponent algorithm
+2. Score tracking
+3. Restart option
+4. Colored board using chalk
+5. Improved input handling
+6. Deploy as a small web game
