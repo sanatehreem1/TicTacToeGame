@@ -113,3 +113,5 @@ This makes the game significantly harder, because the bot opens with an optimal 
 
 In the hardest level, the bot immediately plays an opening move before the player even begins. This feature adds challenge and variety, making the game more strategic and fun.
 
+<img src = "./3player.png" width = "400">
+
