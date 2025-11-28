@@ -12,9 +12,16 @@ function initialise(){
              -7,-8,-9];
     let botStrat = 0;
     if (playerCount == 1){
-        botStrat = prompt('Press 1 for easy difficulty bot, and 2 for hard difficulty: ')
+        console.log('Press 1 for easy difficulty bot, \nPress 2 for hard difficulty,');
+        botStrat = prompt('Press 3 for extra hard difficulty (the bot will go first): ')
     }
-    turn(1, playerCount, botStrat)
+    console.log('\n\n<<---- Game Start ---->>\n');
+    if (botStrat < 3){
+        turn(1, playerCount, botStrat)
+    } else {
+        algorithm(2, 1);
+    }
+    
 }
 
 function translate(value){
@@ -100,44 +107,44 @@ function cornerFree(board){
     return -1;
 }
 
-function randomGo(board){
+function randomGo(board, playerVal){
     let position = Math.floor(Math.random()*9);
     while (board[position] >= 0){
         position = Math.floor(Math.random()*9);
     }
-    board[position] = 0;
-    console.log('Player 2 (O) has chosen position ' + (position + 1) + '.' ); 
+    board[position] = playerVal;
+    console.log(`Player ${playerVal} (${translate(playerVal)}) has chosen position ` + (position + 1) + '.' ); 
 }
 
-function algorithm(strat){
+function algorithm(strat, playerVal){
     if (strat == 1){
-        randomGo(board);
+        randomGo(board, playerVal);
 
     } else if (strat == 2){
         let pos = closeToWin(board);
         if (pos >= 0){
-            board[pos] = 0;
-            console.log('Player 2 (O) has chosen position ' + (pos + 1)  + '.');
+            board[pos] = playerVal;
+            console.log(`Player ${playerVal} (${translate(playerVal)}) has chosen position ` + (pos + 1)  + '.');
 
         } else if (cornerFree(board) >= 0){
             let pos2 = cornerFree(board);
-            board[pos2] = 0;
-            console.log('Player 2 (O) has chosen position ' + (pos2 + 1)  + '.');
+            board[pos2] = playerVal;
+            console.log(`Player ${playerVal} (${translate(playerVal)}) has chosen position ` + (pos2 + 1)  + '.');
             
         } else{
-            randomGo(board);
+            randomGo(board, playerVal);
         }
     }
     if (checkWin(board)) {
         // the checkwin needs 
         console.log('\nThe Final Board:\n' + writeBoard(board));
-        console.log("Player 2 (O) wins!");
+        console.log(`Player ${playerVal} (${translate(playerVal)}) wins!`);
     } else if (Math.min(...board) > -1) {
         // Math.min(...array)
         console.log('\nThe Final Board:\n' + writeBoard(board));
         console.log("It's a draw!");
     } else {
-        turn(1, 1, strat);
+        turn(((playerVal + 1) % 2), 1, strat);
     }
     
 }
@@ -175,7 +182,7 @@ function turn(playerVal, playerNo, diff){
     } else if (playerNo == 2) {
         turn(((playerVal + 1) % 2), 2, diff);
     } else{
-        algorithm(diff);
+        algorithm(diff, ((playerVal + 1) % 2));
     }
     
  
