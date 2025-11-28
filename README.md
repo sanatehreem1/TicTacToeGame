@@ -47,3 +47,9 @@ Board layout:
 ---|---|---
  7 | 8 | 9
 ```
+
+### **5. Technologies**
+- JavaScript (Node.js)
+- prompt-sync (CLI input)
+- Terminal 
+- Recursion & modular functions
