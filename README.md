@@ -53,3 +53,15 @@ Board layout:
 - prompt-sync (CLI input)
 - Terminal 
 - Recursion & modular functions
+
+### **6. Process**
+1. Wrote the pseudocode based on the game logic
+2. Designed the board using numeric values
+3. Built helper functions:
+- ``` initialise() ```
+- ``` translate() ```
+- ``` writeBoard() ```
+- ``` checkWin() ```
+- ``` turn() ```
+4. Added player turn recursion
+5. Tested win, draw, and invalid input cases
